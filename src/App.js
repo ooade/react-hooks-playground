@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
+	const [state, updateState] = useReducer(
+		(state, newState) => ({ ...state, ...newState }),
+		{ username: '', password: '' }
+	);
+
+	const { username, password } = state;
 
 	return (
 		<div className="App">
@@ -14,13 +18,13 @@ function App() {
 					<FormInput
 						label="Username"
 						value={username}
-						onChange={e => setUsername(e.target.value)}
+						onChange={e => updateState({ username: e.target.value })}
 					/>
 					<FormInput
 						label="Password"
 						type="password"
 						value={password}
-						onChange={e => setPassword(e.target.value)}
+						onChange={e => updateState({ password: e.target.value })}
 					/>
 					<button type="submit">Submit</button>
 				</form>

@@ -1,14 +1,31 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const formReducer = props =>
+	useReducer((state, newState) => ({ ...state, ...newState }), { ...props });
+
 function App() {
-	const [state, updateState] = useReducer(
-		(state, newState) => ({ ...state, ...newState }),
-		{ username: '', password: '' }
-	);
+	const [state, updateState] = formReducer({
+		username: '',
+		password: ''
+	});
+
+	const [mounted, updateMounted] = useState('');
 
 	const { username, password } = state;
+
+	useEffect(
+		() => {
+			console.log('render counts');
+			updateMounted('mounted');
+
+			return () => {
+				console.log('Clean up called!');
+			};
+		},
+		['mounted']
+	);
 
 	return (
 		<div className="App">
@@ -30,6 +47,7 @@ function App() {
 				</form>
 			</div>
 			<div className="RightPane">
+				{mounted && <p>Mounted: {mounted}</p>}
 				{username && <p>Username: {username}</p>}
 				{password && <p>Password: {password}</p>}
 			</div>

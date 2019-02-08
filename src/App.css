@@ -59,3 +59,9 @@
 .result {
 	background-color: #eee;
 }
+
+.cleanup-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
